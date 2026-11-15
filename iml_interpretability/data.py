@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import pandas as pd
-from sklearn.datasets import fetch_openml
+from sklearn.datasets import fetch_openml, load_breast_cancer, load_digits, load_iris, load_wine
 
 # OpenML downloads are cached here, relative to the current working directory.
 DATA_HOME = Path("data")
@@ -60,3 +60,27 @@ def load_titanic(data_home: str | Path = DATA_HOME) -> Dataset:
     X = pd.get_dummies(X, drop_first=True, dtype=float)
 
     return Dataset(name="titanic", X=X, y=y)
+
+
+def _from_sklearn(name: str, loader) -> Dataset:
+    """Wrap a scikit-learn bundled dataset (available offline) as a :class:`Dataset`."""
+    bunch = loader(as_frame=True)
+    return Dataset(name=name, X=bunch.data.astype(float), y=bunch.target.rename("target"))
+
+
+def load_default_datasets() -> list[Dataset]:
+    """Load the datasets used in the experiment: four scikit-learn bundled datasets.
+
+    They differ in size, number of features and number of classes (iris: 4 features, 3 classes;
+    wine: 13 features, 3 classes; breast cancer: 30 features, 2 classes; digits: 64 features,
+    10 classes) and need no download.
+
+    :return: The datasets iris, wine, breast_cancer and digits.
+    :rtype: list[Dataset]
+    """
+    return [
+        _from_sklearn("iris", load_iris),
+        _from_sklearn("wine", load_wine),
+        _from_sklearn("breast_cancer", load_breast_cancer),
+        _from_sklearn("digits", load_digits),
+    ]

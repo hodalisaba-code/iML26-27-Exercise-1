@@ -1,0 +1,13 @@
+dataset,family,last_interpretable_complexity,accuracy_at_last_interpretable,first_not_interpretable_complexity,accuracy_at_first_not_interpretable
+breast_cancer,decision_tree_depth,3,0.929,4,0.934
+breast_cancer,gradient_boosting_trees,1,0.629,2,0.629
+breast_cancer,random_forest_trees,1,0.926,2,0.926
+digits,decision_tree_depth,3,0.466,4,0.556
+digits,gradient_boosting_trees,,,1,0.743
+digits,random_forest_trees,1,0.448,2,0.564
+iris,decision_tree_depth,20,0.963,,
+iris,gradient_boosting_trees,,,1,0.942
+iris,random_forest_trees,1,0.916,2,0.947
+wine,decision_tree_depth,20,0.924,,
+wine,gradient_boosting_trees,,,1,0.662
+wine,random_forest_trees,1,0.884,2,0.942
